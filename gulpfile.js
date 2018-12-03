@@ -14,23 +14,11 @@ var concat = require('gulp-concat');
 //创建css
 gulp.task('sass', function() {
 
-    return gulp.src('./src/scss/*.scss')
-        .pipe(sass())
-        .pipe(ycss())
-        .pipe(gulp.dest('./src/css'))
+        return gulp.src('./src/scss/*.scss')
+            .pipe(sass())
+            .pipe(ycss())
+            .pipe(gulp.dest('./src/css'))
 
-})
-
-//搭建服务器
-gulp.task('webserver', function() {
-
-        return gulp.src('src')
-            .pipe(webserver({
-
-                port: 8080,
-                open: true,
-                liverseload: true,
-            }))
     })
     //监听sass
 gulp.task('watch', function() {
@@ -38,11 +26,26 @@ gulp.task('watch', function() {
     return gulp.watch('./src/scss/index.scss', gulp.series('sass'))
 })
 
+
+//搭建服务器
+gulp.task('webserver', function() {
+
+    return gulp.src('src')
+        .pipe(webserver({
+
+            port: 8080,
+            open: true,
+            liverseload: true,
+        }))
+})
+
 //合并js,压缩js
 gulp.task('hJs', function() {
 
-    return gulp.src('./src/js/*.js')
-        .pipe(concat('all.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('./src/js'))
-})
+        return gulp.src('./src/js/*.js')
+            .pipe(concat('all.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('./src/js'))
+    })
+    //监听2
+gulp.task('jian', gulp.parallel('hJs', 'sass', 'watch'))
