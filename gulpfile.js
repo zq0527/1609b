@@ -7,6 +7,10 @@ var webserver = require('gulp-webserver');
 
 //压缩css
 var ycss = require('gulp-clean-css');
+//压缩js
+var uglify = require('gulp-uglify');
+//合并js
+var concat = require('gulp-concat');
 //创建css
 gulp.task('sass', function() {
 
@@ -32,4 +36,13 @@ gulp.task('webserver', function() {
 gulp.task('watch', function() {
 
     return gulp.watch('./src/scss/index.scss', gulp.series('sass'))
+})
+
+//合并js,压缩js
+gulp.task('hJs', function() {
+
+    return gulp.src('./src/js/*.js')
+        .pipe(concat('all.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./src/js'))
 })
